@@ -30,9 +30,9 @@ int main(int argc, char** argv)
   logfile.open(path + "/data/logfile.csv");
   pathfile.open(path + "/data/path.csv");
 
-  ros::Publisher pub(nh.advertise<geometry_msgs::PoseStamped>("/mavros/"
-                                                              "setpoint_position/"
-                                                              "local",
+  ros::Publisher pub(nh.advertise<geometry_msgs::PoseStamped>("/algorithms/"
+                                                              "exploration/"
+                                                              "pose",
                                                               1000));
 
   ros::ServiceClient coverage_srv =
@@ -65,11 +65,18 @@ int main(int argc, char** argv)
   // Up 2 meters and then forward one meter
   double initial_positions[8][4] = {
     { init_pose->pose.position.x, init_pose->pose.position.y,
-      init_pose->pose.position.z + 2.0, init_yaw },
-    { init_pose->pose.position.x + 1.0 * std::cos(init_yaw),
-      init_pose->pose.position.y + 1.0 * std::sin(init_yaw),
-      init_pose->pose.position.z + 2.0, init_yaw },
+      init_pose->pose.position.z + 0.0, init_yaw },
+    { init_pose->pose.position.x + 0.0 * std::cos(init_yaw),
+      init_pose->pose.position.y + 0.0 * std::sin(init_yaw),
+      init_pose->pose.position.z + 0.0, init_yaw },
   };
+  // double initial_positions[8][4] = {
+  //   { init_pose->pose.position.x, init_pose->pose.position.y,
+  //     init_pose->pose.position.z + 2.0, init_yaw },
+  //   { init_pose->pose.position.x + 1.0 * std::cos(init_yaw),
+  //     init_pose->pose.position.y + 1.0 * std::sin(init_yaw),
+  //     init_pose->pose.position.z + 2.0, init_yaw },
+  // };
 
   // This is the initialization motion, necessary that the known free space
   // allows the planning of initial paths.
